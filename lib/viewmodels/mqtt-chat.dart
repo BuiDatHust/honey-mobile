@@ -23,7 +23,7 @@ class MqttChatViewModel extends ChangeNotifier {
 
   initBroker() {
     service = MQTTService(
-        host: '192.168.98.132',
+        host: 'quan.ddns.net',
         port: 1883,
         topics: topics,
         handleMessages: [handleRecievedMessage]);

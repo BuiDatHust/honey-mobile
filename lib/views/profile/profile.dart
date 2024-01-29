@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:honey_mobile/models/auth/token.dart';
 import 'package:honey_mobile/viewmodels/auth.dart';
 import 'package:honey_mobile/viewmodels/token.dart';
+import 'package:honey_mobile/viewmodels/user.dart';
 import 'package:honey_mobile/views/edit-profile/edit-profile.dart';
 import 'package:honey_mobile/views/settings/setting-page.dart';
 import 'package:honey_mobile/widgets/circular-loading-widget.dart';
@@ -20,6 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     AuthViewModel authViewModel = Provider.of<AuthViewModel>(context);
     TokenViewModel tokenViewModel = Provider.of<TokenViewModel>(context);
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       appBar: null,
@@ -72,11 +74,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   startAngle: 180.0,
                                   center: CircleAvatar(
                                     radius: 60,
-                                    backgroundImage: Image.asset(
-                                      "assets/images/avatar.jpg",
-                                      height: 200,
-                                      width: 200,
-                                    ).image,
+                                    backgroundImage: NetworkImage(userViewModel
+                                        .user!.show_medias![0]!.url),
                                   ),
                                   progressColor: Colors.green,
                                 ),
@@ -93,7 +92,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Radius.circular(20.0)),
                                         color: Color.fromARGB(255, 42, 146, 60),
                                       ),
-                                      child: const Text("80% completed",
+                                      child: Text(
+                                          "${userViewModel.user!.completation_percentage}% completed",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500)),
                                     ))
@@ -102,8 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "Bui Dat, 22",
+                            Text(
+                              "${userViewModel.user!.firstname}, ${userViewModel.user!.age}",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 30),
                             )

@@ -20,6 +20,7 @@ class ChatListViewModel extends ChangeNotifier {
       cursor = result.pagination.next_cursor;
       has_more = result.pagination.has_more;
       chats = result.data;
+      print(chats);
     } catch (e) {
       print(e);
     } finally {

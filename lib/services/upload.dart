@@ -15,6 +15,7 @@ class UploadService {
     try {
       List<Media> result = [];
       for (int i = 0; i < files.length; i++) {
+        print(i);
         var file = files[i];
         if (file == null) {
           result.add(Media(url: ""));
@@ -27,14 +28,17 @@ class UploadService {
 
         String fileName = file.path.split('/').last;
         String typeUploadFile = _getUploadFileType(fileName);
+        print(typeUploadFile);
         MultipartFile fileBody =
             await MultipartFile.fromFile(file.path, filename: fileName);
         FormData formData = FormData.fromMap({
           "files": fileBody,
         });
+        print(formData);
         final response = await client.post(
             "${HttpApiConstant.BASE_URL}/media-api/upload/$typeUploadFile",
             data: formData);
+        print(response);
 
         MediaResponse parsedResponse = MediaResponse.fromJson(response.data);
         result.add(parsedResponse.data[0]);
@@ -51,7 +55,8 @@ class UploadService {
   }
 
   _getUploadFileType(String filename) {
-    String type = filename.split('.')[1];
+    print(filename);
+    String type = filename.split('.')[filename.split('.').length-1];
     List<String> imageTypes = ['jpeg', 'jpg', 'png'];
     List<String> videoTypes = ['mp4'];
     List<String> audioTypes = ['mp3'];

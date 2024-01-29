@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:honey_mobile/viewmodels/user.dart';
 import 'package:honey_mobile/views/tabs/home-page.dart';
 import 'package:honey_mobile/views/tabs/list-page.dart';
 import 'package:honey_mobile/views/tabs/matching-page.dart';
 import 'package:honey_mobile/views/tabs/random-matching.dart';
 import 'package:honey_mobile/views/profile/profile.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -18,6 +20,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -34,12 +38,13 @@ class _MainPageState extends State<MainPage> {
               child: Container(
                   height: 40,
                   width: 40,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage("assets/images/avatar.jpg"),
+                      image: NetworkImage(
+                          userViewModel.user!.show_medias![0]!.url),
                     ),
                   )),
             ),

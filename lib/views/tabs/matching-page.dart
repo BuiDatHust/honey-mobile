@@ -126,6 +126,11 @@ class _MatchingPageState extends State<MatchingPage> {
 
   @override
   void initState() {
+    handleInit();
+    super.initState();
+  }
+
+  handleInit() async {
     FriendService friendService = FriendService();
     TokenViewModel tokenViewModel =
         Provider.of<TokenViewModel>(context, listen: false);
@@ -139,11 +144,11 @@ class _MatchingPageState extends State<MatchingPage> {
         Provider.of<FriendViewModel>(context, listen: false);
     friendViewModel.setService(FriendService());
 
-    newFriendViewModel.getListNewFriend(
+    await newFriendViewModel.getListNewFriend(
         context, tokenViewModel.token.access_token);
-    chatListViewModel.getListChat(context, tokenViewModel.token.access_token);
-    friendViewModel.getListFriend(context, tokenViewModel.token.access_token);
-
-    super.initState();
+    await chatListViewModel.getListChat(
+        context, tokenViewModel.token.access_token);
+    await friendViewModel.getListFriend(
+        context, tokenViewModel.token.access_token);
   }
 }
